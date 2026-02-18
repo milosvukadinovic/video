@@ -10,117 +10,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #050505;
-            color: #f2f2f2;
-            overflow: hidden;
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: #050505;
+    color: #f2f2f2;
+    overflow: hidden;
+}
 
-        .video-wrapper {
-  width: 100%;
-  max-width: 900px;
-  aspect-ratio: 16/9;
-  border-radius: 20px;
-  overflow: hidden;
+/* ================= BACKGROUND FX ================= */
+
+.background-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 140, 255, 0.25), transparent 70%);
+    filter: blur(120px);
+    top: 20%;
+    left: 10%;
+    animation: floatGlow 12s ease-in-out infinite alternate;
+    z-index: 0;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(100px, 80px); }
+}
+
+.grain {
+    pointer-events: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    z-index: 3;
+}
+
+/* ================= LAYOUT ================= */
+
+.container {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.left {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+}
+
+.right {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px;
+    position: relative;
+}
+
+/* ================= VIDEO ================= */
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16/9;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+        0 0 60px rgba(255,255,255,0.05),
+        0 0 160px rgba(0,120,255,0.15);
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.video-wrapper:hover {
+    transform: scale(1.04);
+    box-shadow:
+        0 0 80px rgba(255,255,255,0.08),
+        0 0 220px rgba(0,120,255,0.35);
 }
 
 .video-wrapper video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-        /* Animated ambient gradient */
-        .background-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 140, 255, 0.25), transparent 70%);
-            filter: blur(120px);
-            top: 20%;
-            left: 10%;
-            animation: floatGlow 12s ease-in-out infinite alternate;
-            z-index: 0;
-        }
+/* ================= SOUND BUTTON ================= */
 
-        @keyframes floatGlow {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            100% {
-                transform: translate(100px, 80px);
-            }
-        }
-
-        /* Grain overlay */
-        .grain {
-            pointer-events: none;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.05;
-            z-index: 3;
-        }
-
-        .container {
-            position: relative;
-            display: flex;
-            height: 100vh;
-            z-index: 2;
-            opacity: 0;
-            animation: fadeIn 1.5s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        .left {
-            flex: 1.2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px;
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 850px;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow:
-                0 0 60px rgba(255, 255, 255, 0.05),
-                0 0 140px rgba(0, 120, 255, 0.12);
-            transition: transform 0.6s ease, box-shadow 0.6s ease;
-        }
-
-        .video-wrapper:hover {
-            transform: scale(1.03);
-            box-shadow:
-                0 0 80px rgba(255, 255, 255, 0.08),
-                0 0 200px rgba(0, 120, 255, 0.25);
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .sound-btn {
+.sound-btn {
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -136,132 +130,164 @@
     border: none;
     cursor: pointer;
 
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255,255,255,0.08);
     backdrop-filter: blur(12px);
 
-    box-shadow: 0 0 25px rgba(0, 140, 255, 0.4);
+    box-shadow: 0 0 25px rgba(0,140,255,0.4);
     transition: all 0.3s ease;
 }
 
 .sound-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 40px rgba(0, 140, 255, 0.8);
+    box-shadow: 0 0 40px rgba(0,140,255,0.8);
 }
 
 .sound-btn.active {
-    box-shadow: 0 0 50px rgba(255, 0, 180, 0.9);
+    box-shadow: 0 0 50px rgba(255,0,180,0.9);
 }
 
-        .sound-btn > svg{
-    width: 30px;
+.sound-btn svg {
+    width: 28px;
 }
 
-        .right {
-            flex: 0.8;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 120px;
-            position: relative;
-        }
+/* ================= TYPOGRAPHY ================= */
 
-        h1 {
-            font-size: 64px;
-            font-weight: 700;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            animation: slideUp 1s ease forwards;
-        }
+h1 {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    animation: slideUp 1s ease forwards;
+}
 
-        h2 {
-            font-weight: 300;
-            font-size: 22px;
-            opacity: 0.5;
-            margin-bottom: 50px;
-            animation: slideUp 1.2s ease forwards;
-        }
+h2 {
+    font-weight: 300;
+    font-size: 22px;
+    opacity: 0.5;
+    margin-bottom: 50px;
+    animation: slideUp 1.2s ease forwards;
+}
 
-        .description {
-            font-weight: 300;
-            line-height: 1.8;
-            max-width: 420px;
-            opacity: 0.7;
-            margin-bottom: 60px;
-            animation: slideUp 1.4s ease forwards;
-        }
+.description {
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 420px;
+    opacity: 0.7;
+    margin-bottom: 60px;
+    animation: slideUp 1.4s ease forwards;
+}
 
-        .buttons {
-            display: flex;
-            gap: 20px;
-            animation: slideUp 1.6s ease forwards;
-        }
+.buttons {
+    display: flex;
+    gap: 20px;
+    animation: slideUp 1.6s ease forwards;
+}
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(40px);
-                opacity: 0;
-            }
+@keyframes slideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+.btn {
+    padding: 14px 30px;
+    border-radius: 40px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
 
-        .btn {
-            padding: 14px 30px;
-            border-radius: 40px;
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
+.primary {
+    background: white;
+    color: black;
+}
 
-        .primary {
-            background: white;
-            color: black;
-        }
+.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+}
 
-        .primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-        }
+.secondary {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+}
 
-        .secondary {
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-        }
+.secondary:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.08);
+}
 
-        .secondary:hover {
-            border-color: white;
-            background: rgba(255, 255, 255, 0.08);
-        }
+.footer {
+    position: absolute;
+    bottom: 50px;
+    font-size: 12px;
+    opacity: 0.3;
+    letter-spacing: 1px;
+}
 
-        .footer {
-            position: absolute;
-            bottom: 50px;
-            font-size: 12px;
-            opacity: 0.3;
-            letter-spacing: 1px;
-        }
+/* ================= MOBILE OPTIMIZATION ================= */
 
-        @media (max-width: 1100px) {
-            .container {
-                flex-direction: column;
-                height: auto;
-            }
+@media (max-width: 1100px) {
 
-            body {
-                overflow: auto;
-            }
+    body {
+        overflow: auto;
+    }
 
-            .right {
-                padding: 80px;
-            }
-        }
-    </style>
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left {
+        padding: 20px;
+    }
+
+    .video-wrapper {
+        max-width: 100%;
+        border-radius: 20px;
+        transform: scale(1.08);
+    }
+
+    .right {
+        padding: 50px 24px 80px 24px;
+    }
+
+    h1 {
+        font-size: 42px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .description {
+        font-size: 15px;
+        max-width: 100%;
+    }
+
+    .footer {
+        position: relative;
+        margin-top: 40px;
+        bottom: unset;
+    }
+
+    .sound-btn {
+        width: 52px;
+        height: 52px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+</style>
+
 </head>
 
 <body>
@@ -273,7 +299,15 @@
 
         <div class="left">
             <div class="video-wrapper">
-                <video id="heroVideo" autoplay muted loop playsinline>
+                <video 
+    id="heroVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="auto"
+>
                     <source
                         src="https://res.cloudinary.com/dncfwfcvw/video/upload/v1771249751/Katarina_Markovic_Showreel0001-3294_dherjc.mp4"
                         type="video/mp4">
@@ -338,6 +372,17 @@
             }
         });
     </script>
+
+    <script>
+const heroVideo = document.getElementById("heroVideo");
+
+function enableVideoPlayback() {
+    heroVideo.play().catch(() => {});
+    document.removeEventListener("touchstart", enableVideoPlayback);
+}
+
+document.addEventListener("touchstart", enableVideoPlayback);
+</script>
 
 </body>
 
