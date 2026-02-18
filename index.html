@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Katarina Marković | 3D Animator</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <title>Lana Kovacevic | 3D Animator</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -119,6 +119,38 @@
             height: 100%;
             border: none;
         }
+
+        .sound-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 0 25px rgba(0, 140, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.sound-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px rgba(0, 140, 255, 0.8);
+}
+
+.sound-btn.active {
+    box-shadow: 0 0 50px rgba(255, 0, 180, 0.9);
+}
 
         .right {
             flex: 0.8;
@@ -237,15 +269,22 @@
 
         <div class="left">
             <div class="video-wrapper">
-                <video autoplay muted loop playsinline>
-                    <source src="https://res.cloudinary.com/dncfwfcvw/video/upload/v1771249751/Katarina_Markovic_Showreel0001-3294_dherjc.mp4" type="video/mp4">
+                <video id="heroVideo" autoplay muted loop playsinline>
+                    <source
+                        src="https://res.cloudinary.com/dncfwfcvw/video/upload/v1771249751/Katarina_Markovic_Showreel0001-3294_dherjc.mp4"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+                <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">
+                    <svg id="soundIcon" width="22" height="22" viewBox="0 0 24 24" fill="white">
+                        <path d="M3 9v6h4l5 5V4L7 9H3z" />
+                    </svg>
+                </button>
             </div>
         </div>
 
         <div class="right">
-            <h1>Katarina Marković</h1>
+            <h1>Lana Kovačević</h1>
             <h2>3D Animator / Visual Storyteller</h2>
 
             <div class="description">
@@ -255,22 +294,44 @@
             </div>
 
             <div class="buttons">
-                <a href="mailto:katarina.markovic98@yahoo.com" class="btn primary">Contact</a>
+                <a href="mailto:lana@email.com" class="btn primary">Contact</a>
             </div>
 
             <div class="footer">
-                © 2026 Katarina Marković — Crafted with intention.
+                © 2026 Lana Kovačević — Crafted with intention.
             </div>
         </div>
 
     </div>
 
     <script>
+        // subtle mouse parallax glow
         const glow = document.querySelector('.background-glow');
 
         document.addEventListener('mousemove', e => {
             glow.style.left = e.clientX / 4 + 'px';
             glow.style.top = e.clientY / 4 + 'px';
+        });
+    </script>
+    <script>
+        const video = document.getElementById("heroVideo");
+        const btn = document.getElementById("soundToggle");
+        const icon = document.getElementById("soundIcon");
+
+        btn.addEventListener("click", () => {
+            video.muted = !video.muted;
+
+            if (video.muted) {
+                btn.classList.remove("active");
+                icon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3z"/>';
+            } else {
+                btn.classList.add("active");
+                icon.innerHTML = `
+                <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+                <path d="M16 8a4 4 0 010 8" stroke="white" stroke-width="2" fill="none"/>
+                <path d="M18 5a7 7 0 010 14" stroke="white" stroke-width="2" fill="none"/>
+            `;
+            }
         });
     </script>
 
